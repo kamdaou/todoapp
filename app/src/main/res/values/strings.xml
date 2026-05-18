@@ -11,4 +11,14 @@
     <string name="description">Description</string>
     <string name="ajouter_tache">Ajouter la tâche</string>
     <string name="retour">Retour</string>
+
+    <!-- Écran détail -->
+    <string name="detail">Détail</string>
+    <string name="terminee">Terminée</string>
+    <string name="supprimer_tache">Supprimer cette tâche</string>
+
+    <!-- Écran paramètres -->
+    <string name="parametres">Paramètres</string>
+    <string name="parametres_titre">Paramètres de l\'application</string>
+    <string name="parametres_placeholder">Les paramètres seront disponibles dans une prochaine version.</string>
 </resources>

@@ -1,5 +1,6 @@
 package td.cadet.todochad.ui.screens
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -7,9 +8,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -21,17 +24,37 @@ import td.cadet.todochad.R
 import td.cadet.todochad.model.Tache
 import td.cadet.todochad.ui.components.TaskItem
 
+// ==========================================================
+// MODIFIÉ POUR TP2 — Nouveaux paramètres ajoutés
+// ==========================================================
+// Deux nouveaux callbacks ont été ajoutés à ce composable :
+//   - onTacheClick: (Tache) -> Unit  → naviguer vers le détail
+//   - onParametresClick: () -> Unit  → naviguer vers les paramètres
+//
+// Le TopAppBar inclut maintenant un bouton Paramètres (icône engrenage)
+// et chaque TaskItem est cliquable pour accéder au détail.
+// ==========================================================
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ListTasksScreen(
     taches: List<Tache>,
     onToggleTerminee: (Tache) -> Unit,
     onAjouterClick: () -> Unit,
+    onTacheClick: (Tache) -> Unit,
+    onParametresClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text(stringResource(R.string.app_name)) })
+            TopAppBar(
+                title = { Text(stringResource(R.string.app_name)) },
+                actions = {
+                    IconButton(onClick = onParametresClick) {
+                        Icon(Icons.Default.Settings, contentDescription = stringResource(R.string.parametres))
+                    }
+                }
+            )
         },
         floatingActionButton = {
             FloatingActionButton(onClick = onAjouterClick) {
@@ -54,7 +77,8 @@ fun ListTasksScreen(
                 items(taches, key = { it.id }) { tache ->
                     TaskItem(
                         tache = tache,
-                        onToggleTerminee = onToggleTerminee
+                        onToggleTerminee = onToggleTerminee,
+                        modifier = Modifier.clickable { onTacheClick(tache) }
                     )
                 }
             }
