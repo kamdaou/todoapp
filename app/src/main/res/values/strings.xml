@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">TodoChad</string>
+
+    <!-- Écran liste -->
+    <string name="aucune_tache">Aucune tâche pour le moment</string>
+    <string name="ajouter">Ajouter</string>
+
+    <!-- Écran ajout -->
+    <string name="nouvelle_tache">Nouvelle tâche</string>
+    <string name="titre">Titre</string>
+    <string name="description">Description</string>
+    <string name="ajouter_tache">Ajouter la tâche</string>
+    <string name="retour">Retour</string>
 </resources>
