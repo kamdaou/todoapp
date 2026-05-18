@@ -1,83 +1,87 @@
 package td.cadet.todochad.ui.screens
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import td.cadet.todochad.R
 
-// ==========================================================
-// TODO 4 — Créer l'écran d'ajout de tâche
-// ==========================================================
-//
-// Ce composable affiche un formulaire pour créer une nouvelle tâche.
-//
-// Paramètres :
-//   - onAjouter: (titre: String, description: String) -> Unit
-//       (callback appelé quand l'utilisateur valide le formulaire)
-//   - onAnnuler: () -> Unit
-//       (callback pour revenir en arrière)
-//   - modifier: Modifier (optionnel)
-//
-// Structure attendue :
-//   Scaffold(
-//       topBar = {
-//           TopAppBar(
-//               title = { Text("Nouvelle tâche") },
-//               navigationIcon = {
-//                   IconButton(onClick = onAnnuler) {
-//                       Icon(Icons.AutoMirrored.Filled.ArrowBack, "Retour")
-//                   }
-//               }
-//           )
-//       }
-//   ) { innerPadding ->
-//       Column(modifier = Modifier.padding(innerPadding).padding(16.dp)) {
-//
-//           // Champ titre
-//           OutlinedTextField(
-//               value = titre,            // variable d'état locale
-//               onValueChange = { ... },
-//               label = { Text("Titre") },
-//               modifier = Modifier.fillMaxWidth()
-//           )
-//
-//           Spacer(modifier = Modifier.height(8.dp))
-//
-//           // Champ description
-//           OutlinedTextField(
-//               value = description,      // variable d'état locale
-//               onValueChange = { ... },
-//               label = { Text("Description") },
-//               modifier = Modifier.fillMaxWidth(),
-//               minLines = 3
-//           )
-//
-//           Spacer(modifier = Modifier.height(16.dp))
-//
-//           // Bouton de validation
-//           Button(
-//               onClick = { onAjouter(titre, description) },
-//               modifier = Modifier.fillMaxWidth(),
-//               enabled = titre.isNotBlank()  // désactivé si titre vide
-//           ) {
-//               Text("Ajouter la tâche")
-//           }
-//       }
-//   }
-//
-// État local nécessaire (avec remember + mutableStateOf) :
-//   var titre by remember { mutableStateOf("") }
-//   var description by remember { mutableStateOf("") }
-//
-// Composants à importer :
-//   - OutlinedTextField, Button, Text (material3)
-//   - Column, Spacer, fillMaxWidth (foundation.layout)
-//   - remember, mutableStateOf, getValue, setValue (runtime)
-// ==========================================================
-
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddTaskScreen(
     onAjouter: (titre: String, description: String) -> Unit,
     onAnnuler: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    // TODO 4 : Implémentez le contenu ici
+    var titre by remember { mutableStateOf("") }
+    var description by remember { mutableStateOf("") }
+
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text(stringResource(R.string.nouvelle_tache)) },
+                navigationIcon = {
+                    IconButton(onClick = onAnnuler) {
+                        Icon(
+                            Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = stringResource(R.string.retour)
+                        )
+                    }
+                }
+            )
+        },
+        modifier = modifier
+    ) { innerPadding ->
+        Column(
+            modifier = Modifier
+                .padding(innerPadding)
+                .padding(16.dp)
+        ) {
+            OutlinedTextField(
+                value = titre,
+                onValueChange = { titre = it },
+                label = { Text(stringResource(R.string.titre)) },
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            OutlinedTextField(
+                value = description,
+                onValueChange = { description = it },
+                label = { Text(stringResource(R.string.description)) },
+                modifier = Modifier.fillMaxWidth(),
+                minLines = 3
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Button(
+                onClick = { onAjouter(titre, description) },
+                modifier = Modifier.fillMaxWidth(),
+                enabled = titre.isNotBlank()
+            ) {
+                Text(stringResource(R.string.ajouter_tache))
+            }
+        }
+    }
 }

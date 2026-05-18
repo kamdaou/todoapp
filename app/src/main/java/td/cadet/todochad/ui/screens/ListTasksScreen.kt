@@ -1,55 +1,27 @@
 package td.cadet.todochad.ui.screens
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import td.cadet.todochad.R
 import td.cadet.todochad.model.Tache
+import td.cadet.todochad.ui.components.TaskItem
 
-// ==========================================================
-// TODO 3 — Créer l'écran liste des tâches
-// ==========================================================
-//
-// Ce composable affiche la liste de toutes les tâches et
-// permet d'en ajouter de nouvelles via un bouton flottant (FAB).
-//
-// Paramètres :
-//   - taches: List<Tache> (liste des tâches à afficher)
-//   - onToggleTerminee: (Tache) -> Unit (callback quand on coche/décoche)
-//   - onAjouterClick: () -> Unit (callback quand on clique sur le FAB)
-//   - modifier: Modifier (optionnel)
-//
-// Structure attendue :
-//   Scaffold(
-//       topBar = {
-//           TopAppBar(title = { Text("TodoChad") })
-//       },
-//       floatingActionButton = {
-//           FloatingActionButton(onClick = onAjouterClick) {
-//               Icon(Icons.Default.Add, contentDescription = "Ajouter")
-//           }
-//       }
-//   ) { innerPadding ->
-//       if (taches.isEmpty()) {
-//           // Afficher un message centré : "Aucune tâche pour le moment"
-//           // Utiliser Box(contentAlignment = Center) avec un Text
-//       } else {
-//           LazyColumn {
-//               items(taches) { tache ->
-//                   TaskItem(tache, onToggleTerminee)
-//               }
-//           }
-//       }
-//   }
-//
-// Composants à importer :
-//   - Scaffold, TopAppBar, FloatingActionButton (material3)
-//   - LazyColumn, items (foundation.lazy)
-//   - Icon, Icons (material.icons)
-//   - Box (foundation.layout)
-//
-// Astuce : n'oubliez pas d'appliquer innerPadding au contenu
-//          via Modifier.padding(innerPadding)
-// ==========================================================
-
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ListTasksScreen(
     taches: List<Tache>,
@@ -57,5 +29,35 @@ fun ListTasksScreen(
     onAjouterClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    // TODO 3 : Implémentez le contenu ici
+    Scaffold(
+        topBar = {
+            TopAppBar(title = { Text(stringResource(R.string.app_name)) })
+        },
+        floatingActionButton = {
+            FloatingActionButton(onClick = onAjouterClick) {
+                Icon(Icons.Default.Add, contentDescription = stringResource(R.string.ajouter))
+            }
+        },
+        modifier = modifier
+    ) { innerPadding ->
+        if (taches.isEmpty()) {
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
+            ) {
+                Text(stringResource(R.string.aucune_tache))
+            }
+        } else {
+            LazyColumn(modifier = Modifier.padding(innerPadding)) {
+                items(taches, key = { it.id }) { tache ->
+                    TaskItem(
+                        tache = tache,
+                        onToggleTerminee = onToggleTerminee
+                    )
+                }
+            }
+        }
+    }
 }

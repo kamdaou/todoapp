@@ -1,40 +1,20 @@
 package td.cadet.todochad.ui.components
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Card
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.unit.dp
 import td.cadet.todochad.model.Tache
-
-// ==========================================================
-// TODO 2 — Créer le composable TaskItem
-// ==========================================================
-//
-// Ce composable affiche UNE tâche dans la liste.
-// Il reçoit en paramètres :
-//   - tache: Tache (la tâche à afficher)
-//   - onToggleTerminee: (Tache) -> Unit (callback quand on coche/décoche)
-//   - modifier: Modifier (optionnel)
-//
-// Structure attendue :
-//   Card {
-//       Row(verticalAlignment = CenterVertically) {
-//           Checkbox(checked = tache.terminee, onCheckedChange = ...)
-//           Column {
-//               Text(tache.titre)          // en gras (FontWeight.Bold)
-//               Text(tache.description)    // style bodySmall, couleur grise
-//           }
-//       }
-//   }
-//
-// Composants à importer :
-//   - Card (androidx.compose.material3)
-//   - Row, Column (androidx.compose.foundation.layout)
-//   - Checkbox (androidx.compose.material3)
-//   - Text (androidx.compose.material3)
-//
-// Astuce : utilisez Modifier.padding(16.dp) pour l'espacement
-//          et Modifier.weight(1f) sur la Column pour qu'elle
-//          prenne tout l'espace restant.
-// ==========================================================
 
 @Composable
 fun TaskItem(
@@ -42,5 +22,33 @@ fun TaskItem(
     onToggleTerminee: (Tache) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    // TODO 2 : Implémentez le contenu ici
+    Card(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 4.dp)
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(8.dp)
+        ) {
+            Checkbox(
+                checked = tache.terminee,
+                onCheckedChange = { onToggleTerminee(tache) }
+            )
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = tache.titre,
+                    fontWeight = FontWeight.Bold,
+                    textDecoration = if (tache.terminee) TextDecoration.LineThrough else null
+                )
+                if (tache.description.isNotBlank()) {
+                    Text(
+                        text = tache.description,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            }
+        }
+    }
 }
