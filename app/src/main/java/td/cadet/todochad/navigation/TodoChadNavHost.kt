@@ -18,6 +18,8 @@ fun TodoChadNavHost(
     onToggleTerminee: (Tache) -> Unit,
     onAjouterTache: (String, String) -> Unit,
     onSupprimerTache: (Tache) -> Unit,
+    onSyncClick: () -> Unit,
+    isSyncing: Boolean,
     modifier: Modifier = Modifier
 ) {
     val navController = rememberNavController()
@@ -33,7 +35,9 @@ fun TodoChadNavHost(
                 onToggleTerminee = onToggleTerminee,
                 onAjouterClick = { navController.navigate(AjouterTache) },
                 onTacheClick = { tache -> navController.navigate(DetailTache(tache.id)) },
-                onParametresClick = { navController.navigate(Parametres) }
+                onParametresClick = { navController.navigate(Parametres) },
+                onSyncClick = onSyncClick,
+                isSyncing = isSyncing
             )
         }
 
