@@ -25,14 +25,31 @@ import td.cadet.todochad.model.Tache
 import td.cadet.todochad.ui.components.TaskItem
 
 // ==========================================================
-// MODIFIÉ POUR TP2 — Nouveaux paramètres ajoutés
+// TODO 4 — Ajouter un bouton de synchronisation
 // ==========================================================
-// Deux nouveaux callbacks ont été ajoutés à ce composable :
-//   - onTacheClick: (Tache) -> Unit  → naviguer vers le détail
-//   - onParametresClick: () -> Unit  → naviguer vers les paramètres
 //
-// Le TopAppBar inclut maintenant un bouton Paramètres (icône engrenage)
-// et chaque TaskItem est cliquable pour accéder au détail.
+// Ajoutez un nouveau paramètre au composable :
+//   - onSyncClick: () -> Unit (callback pour synchroniser avec l'API)
+//   - isSyncing: Boolean (pour afficher un indicateur de chargement)
+//
+// Dans le TopAppBar.actions, ajoutez un IconButton AVANT le Settings :
+//
+//   if (isSyncing) {
+//       CircularProgressIndicator(
+//           modifier = Modifier.size(24.dp),
+//           strokeWidth = 2.dp
+//       )
+//   } else {
+//       IconButton(onClick = onSyncClick) {
+//           Icon(Icons.Default.Refresh, contentDescription = "Synchroniser")
+//       }
+//   }
+//
+// Imports supplémentaires :
+//   - androidx.compose.material3.CircularProgressIndicator
+//   - androidx.compose.material.icons.filled.Refresh
+//   - androidx.compose.foundation.layout.size
+//   - androidx.compose.ui.unit.dp
 // ==========================================================
 
 @OptIn(ExperimentalMaterial3Api::class)

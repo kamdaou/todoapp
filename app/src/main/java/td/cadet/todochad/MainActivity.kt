@@ -43,12 +43,49 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+// ==========================================================
+// TODO 5 — Ajouter la synchronisation Retrofit dans TodoChadApp
+// ==========================================================
+//
+// Ajoutez la logique de synchronisation :
+//
+//   1. Créer un état pour le chargement :
+//      var isSyncing by remember { mutableStateOf(false) }
+//
+//   2. Ajouter les callbacks onSyncClick et isSyncing au NavHost :
+//      onSyncClick = {
+//          scope.launch {
+//              isSyncing = true
+//              try {
+//                  val todos = RetrofitInstance.api.getTodos()
+//                  // Limiter à 20 tâches pour la démo
+//                  todos.take(20).forEach { dto ->
+//                      tacheDao.insert(dto.toTacheEntity())
+//                  }
+//              } catch (e: Exception) {
+//                  // Gérer l'erreur (on verra le Snackbar plus tard)
+//                  e.printStackTrace()
+//              } finally {
+//                  isSyncing = false
+//              }
+//          }
+//      }
+//
+// Imports supplémentaires :
+//   - td.cadet.todochad.data.remote.RetrofitInstance
+//   - td.cadet.todochad.data.remote.toTacheEntity
+//   - androidx.compose.runtime.mutableStateOf
+//   - androidx.compose.runtime.setValue
+// ==========================================================
+
 @Composable
 fun TodoChadApp(tacheDao: TacheDao) {
     val taches by tacheDao.getAllTaches()
         .map { entities -> entities.map { it.toTache() } }
         .collectAsState(initial = emptyList())
     val scope = rememberCoroutineScope()
+
+    // TODO 5 : Ajoutez var isSyncing et passez onSyncClick/isSyncing au NavHost
 
     TodoChadNavHost(
         taches = taches,

@@ -17,6 +17,11 @@
     <string name="terminee">Terminée</string>
     <string name="supprimer_tache">Supprimer cette tâche</string>
 
+    <!-- Synchronisation -->
+    <string name="synchroniser">Synchroniser</string>
+    <string name="sync_succes">Tâches importées avec succès</string>
+    <string name="sync_erreur">Erreur de synchronisation</string>
+
     <!-- Écran paramètres -->
     <string name="parametres">Paramètres</string>
     <string name="parametres_titre">Paramètres de l\'application</string>
