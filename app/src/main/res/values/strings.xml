@@ -17,6 +17,9 @@
     <string name="terminee">Terminée</string>
     <string name="supprimer_tache">Supprimer cette tâche</string>
 
+    <!-- Rappel -->
+    <string name="activer_rappel">Activer un rappel (1 min)</string>
+
     <!-- Synchronisation -->
     <string name="synchroniser">Synchroniser</string>
     <string name="sync_succes">Tâches importées avec succès</string>
