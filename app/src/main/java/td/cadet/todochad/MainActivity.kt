@@ -25,6 +25,31 @@ import td.cadet.todochad.data.remote.toTacheEntity
 import td.cadet.todochad.navigation.TodoChadNavHost
 import td.cadet.todochad.ui.theme.TodoChadTheme
 
+// ==========================================================
+// TODO 5 — Demander les permissions et créer le canal de notification
+// ==========================================================
+//
+// Dans onCreate, AVANT setContent :
+//
+//   1. Créer le canal de notification :
+//      NotificationHelper.createNotificationChannel(this)
+//
+//   2. Demander la permission POST_NOTIFICATIONS (Android 13+) :
+//      val requestPermissionLauncher = registerForActivityResult(
+//          ActivityResultContracts.RequestPermission()
+//      ) { isGranted -> /* on peut logger le résultat */ }
+//
+//      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+//          requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+//      }
+//
+// Imports nécessaires :
+//   - android.Manifest
+//   - android.os.Build
+//   - androidx.activity.result.contract.ActivityResultContracts
+//   - td.cadet.todochad.notifications.NotificationHelper
+// ==========================================================
+
 class MainActivity : ComponentActivity() {
 
     private val database by lazy {

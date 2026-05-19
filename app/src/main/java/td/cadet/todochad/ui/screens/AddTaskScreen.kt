@@ -25,6 +25,56 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import td.cadet.todochad.R
 
+// ==========================================================
+// TODO 3 — Ajouter un switch "Rappel" et planifier via WorkManager
+// ==========================================================
+//
+// Ajoutez un Switch pour activer un rappel dans 1 minute (démo).
+//
+// Nouveaux états locaux :
+//   var rappelActive by remember { mutableStateOf(false) }
+//
+// Dans le Column, après le bouton, ajoutez :
+//
+//   Row(verticalAlignment = CenterVertically) {
+//       Switch(
+//           checked = rappelActive,
+//           onCheckedChange = { rappelActive = it }
+//       )
+//       Spacer(modifier = Modifier.width(8.dp))
+//       Text("Activer un rappel (1 min)")
+//   }
+//
+// Modifiez le onClick du Button pour planifier le rappel :
+//
+//   onClick = {
+//       if (rappelActive) {
+//           val workRequest = OneTimeWorkRequestBuilder<RappelWorker>()
+//               .setInitialDelay(1, TimeUnit.MINUTES)
+//               .setInputData(workDataOf(
+//                   "titre" to "Rappel : $titre",
+//                   "message" to description.ifBlank { "N'oubliez pas cette tâche !" }
+//               ))
+//               .build()
+//           WorkManager.getInstance(context).enqueue(workRequest)
+//       }
+//       onAjouter(titre, description)
+//   }
+//
+// Pour obtenir le context dans un Composable :
+//   val context = LocalContext.current
+//
+// Imports nécessaires :
+//   - androidx.compose.material3.Switch
+//   - androidx.compose.foundation.layout.Row, width
+//   - androidx.compose.ui.platform.LocalContext
+//   - androidx.work.OneTimeWorkRequestBuilder
+//   - androidx.work.WorkManager
+//   - androidx.work.workDataOf
+//   - java.util.concurrent.TimeUnit
+//   - td.cadet.todochad.notifications.RappelWorker
+// ==========================================================
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddTaskScreen(
